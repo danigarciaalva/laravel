@@ -1,37 +1,5 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Application Routes
-|--------------------------------------------------------------------------
-|
-| Simply tell Laravel the HTTP verbs and URIs it should respond to. It is a
-| breeze to setup your application using Laravel's RESTful routing and it
-| is perfectly suited for building large applications and simple APIs.
-|
-| Let's respond to a simple GET request to http://example.com/hello:
-|
-|		Route::get('hello', function()
-|		{
-|			return 'Hello World!';
-|		});
-|
-| You can even respond to more than one URI:
-|
-|		Route::post(array('hello', 'world'), function()
-|		{
-|			return 'Hello World!';
-|		});
-|
-| It's easy to allow URI wildcards using (:num) or (:any):
-|
-|		Route::put('hello/(:any)', function($name)
-|		{
-|			return "Welcome, $name.";
-|		});
-|
-*/
-
 Route::get('/', function()
 {
 	$data= array(
@@ -46,6 +14,35 @@ Route::get('/', function()
 Route::get('about', function()
 {
 	return View::make('home.about');
+});
+
+Route::get('DB',function()
+{
+	$title = 'Second post in laravel';
+	$body = 'Another nice post :D';
+
+	$posts = DB::query('INSERT INTO posts VALUES (null, :title, :body)',
+		array($title, $body));
+	//$posts = DB::query('SELECT * FROM posts');
+});
+
+Route::get('DBetter', function()
+{
+	/*
+	$query = DB::table('posts')->where('id','=',1)->first(); SELECT * FROM posts WHERE id = 1 LIMIT 1
+	dd($query);
+	$query2 = DB::table('posts')->first(); // SELECT * FROM posts LIMIT 1
+	dd($query2);
+	$query3 = DB::table('posts')->where_id(2)->get(); // Dinamyc function
+	dd($query3);
+	$query4 = DB::table('posts')
+		->where(function($query){
+			$query->where('id','=',2);
+		})->get();
+	dd($query4);
+	*/
+	$query5 = DB::table('posts')->order_by('id','desc')->get();
+	dd($query5);
 });
 /*
 |--------------------------------------------------------------------------
